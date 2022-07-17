@@ -30,28 +30,13 @@ public class Usuario {
     @NotNull
     @Getter
     @Setter
-    private String domicilio;
-
-    @NotNull
-    @Getter
-    @Setter
-    private String dni;
-    
-    @NotNull
-    @Getter
-    @Setter
-    private String telefono;
+    private String password;
 
     @NotNull
     @Column(unique = true)
     @Getter
     @Setter
     private String email;
-
-    @NotNull
-    @Getter
-    @Setter
-    private String miplan;
 
     @Getter
     @Setter
@@ -63,15 +48,10 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(String nombre, String domicilio, String dni, String telefono, String email, String miplan) {
+    public Usuario(String nombre, String password, String email) {
         this.nombre = nombre;
-        this.domicilio = domicilio;
-        this.dni = dni;
-        this.telefono = telefono;
+        this.password = password;
         this.email = email;
-        this.miplan = miplan;
     }
-
-    
     
 }

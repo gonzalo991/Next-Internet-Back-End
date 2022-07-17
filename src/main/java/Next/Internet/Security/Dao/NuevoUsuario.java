@@ -23,6 +23,9 @@ public class NuevoUsuario {
     @Setter
     @NotBlank
     private String password;
+
+    @Getter
+    @Setter
     private Set<String> roles = new HashSet<>();
-    
+
 }
