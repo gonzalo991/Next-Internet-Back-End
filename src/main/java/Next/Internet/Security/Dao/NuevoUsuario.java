@@ -1,13 +1,28 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Next.Internet.Security.Dao;
 
-/**
- *
- * @author gonxa
- */
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Email;
+import java.util.HashSet;
+import java.util.Set;
+import lombok.Getter;
+import lombok.Setter;
+
 public class NuevoUsuario {
+
+    @Getter
+    @Setter
+    @NotBlank
+    private String nombre;
+
+    @Getter
+    @Setter
+    @Email
+    private String email;
+
+    @Getter
+    @Setter
+    @NotBlank
+    private String password;
+    private Set<String> roles = new HashSet<>();
     
 }
