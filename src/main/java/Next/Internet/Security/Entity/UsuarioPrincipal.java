@@ -43,7 +43,7 @@ public class UsuarioPrincipal implements UserDetails {
                 .map(rol -> new SimpleGrantedAuthority(rol.getRolNombre().name()))
                 .collect(Collectors.toList());
 
-        return new UsuarioPrincipal(usuario.getNombre(), usuario.getEmail(), usuario.getDni(), authorities);
+        return new UsuarioPrincipal(usuario.getNombre(), usuario.getEmail(), usuario.getPassword(), authorities);
     }
     
     @Override
