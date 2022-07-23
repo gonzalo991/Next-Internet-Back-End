@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,19 +29,25 @@ public class Usuario {
     private String nombre;
 
     @NotNull
+    @Column(unique = true)
     @Getter
     @Setter
-    private String password;
+    private String nombreUsuario;
 
     @NotNull
-    @Column(unique = true)
     @Getter
     @Setter
     private String email;
 
+    @NotNull
     @Getter
     @Setter
-    @ManyToMany
+    private String password;
+
+    @Getter
+    @Setter
+    @NotNull
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "rol_id"))
     private Set<Rol> roles = new HashSet<>();
@@ -48,10 +55,12 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(String nombre, String password, String email) {
+    public Usuario(String nombre, String nombreUsuario, String email, String password) {
         this.nombre = nombre;
-        this.password = password;
+        this.nombreUsuario = nombreUsuario;
         this.email = email;
+        this.password = password;
     }
-    
+
+
 }

@@ -1,5 +1,6 @@
 package Next.Internet.Security.Entity;
 
+import jakarta.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,14 +15,22 @@ public class UsuarioPrincipal implements UserDetails {
 
     @Getter
     @Setter
+    @NotNull
     private String nombre;
+    
+    @Getter
+    @Setter
+    @NotNull
+    private String nombreUsuario;
 
     @Getter
     @Setter
+    @NotNull
     private String email;
 
     @Getter
     @Setter
+    @NotNull
     private String password;
 
     @Getter
@@ -31,19 +40,22 @@ public class UsuarioPrincipal implements UserDetails {
     public UsuarioPrincipal() {
     }
 
-    public UsuarioPrincipal(String nombre, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UsuarioPrincipal(String nombre, String nombreUsuario, String email, String password, Collection<? extends GrantedAuthority> authorities) {
         this.nombre = nombre;
+        this.nombreUsuario = nombreUsuario;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
     }
+
+    
 
     public static UsuarioPrincipal build(Usuario usuario) {
         List<GrantedAuthority> authorities = usuario.getRoles().stream()
                 .map(rol -> new SimpleGrantedAuthority(rol.getRolNombre().name()))
                 .collect(Collectors.toList());
 
-        return new UsuarioPrincipal(usuario.getNombre(), usuario.getEmail(), usuario.getPassword(), authorities);
+        return new UsuarioPrincipal(usuario.getNombre(),usuario.getNombreUsuario(), usuario.getEmail(), usuario.getPassword(), authorities);
     }
     
     @Override
@@ -58,7 +70,7 @@ public class UsuarioPrincipal implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return nombreUsuario;
     }
 
     @Override

@@ -7,7 +7,7 @@ public class LoginUsuario {
 
     @Getter
     @Setter
-    private String email;
+    private String nombreUsuario;
 
     @Getter
     @Setter
