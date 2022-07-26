@@ -33,17 +33,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 @CrossOrigin
 public class AuthController {
-    
+
     private final PasswordEncoder passwordEncoder;
-    
+
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    
+
     private final UsuarioService usuarioService;
-    
+
     private final RolService rolService;
-    
+
     private final JwtProvider jwtProvider;
-    
+
     @Autowired
     public AuthController(PasswordEncoder passwordEncoder, AuthenticationManagerBuilder authenticationManagerBuilder, UsuarioService usuarioService, RolService rolService, JwtProvider jwtProvider) {
         this.passwordEncoder = passwordEncoder;
@@ -52,7 +52,8 @@ public class AuthController {
         this.rolService = rolService;
         this.jwtProvider = jwtProvider;
     }
-    
+
+    /*id, nombre,nombreUsuario, email, password, domicilio, dni, telefono, miplan*/
     @PostMapping("/registro")
     public ResponseEntity<Object> registro(@Valid @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -62,19 +63,22 @@ public class AuthController {
         } else if (usuarioService.existsByEmail(nuevoUsuario.getEmail())) {
             return new ResponseEntity<>(new Mensaje("Email existente! Pruebe con otro!"), HttpStatus.BAD_REQUEST);
         }
-        Usuario usuario = new Usuario(nuevoUsuario.getNombre(), nuevoUsuario.getNombreUsuario(), nuevoUsuario.getEmail(), passwordEncoder.encode(nuevoUsuario.getPassword()));
+        Usuario usuario = new Usuario(nuevoUsuario.getNombre(), nuevoUsuario.getNombreUsuario(), nuevoUsuario.getEmail(), passwordEncoder.encode(nuevoUsuario.getPassword()), nuevoUsuario.getDomicilio(), nuevoUsuario.getDni(), nuevoUsuario.getTelefono(), nuevoUsuario.getMiPlan());
+
         Set<Rol> roles = new HashSet<>();
         roles.add(rolService.getByNombre(RolNombre.ROLE_USER).get());
+
         usuarioService.save(usuario);
         if (nuevoUsuario.getRoles().contains("admin")) {
+            roles.clear();
             roles.add(rolService.getByNombre(RolNombre.ROLE_ADMIN).get());
             usuario.setRoles(roles);
             usuarioService.save(usuario);
             return new ResponseEntity(new Mensaje("Usuario guardado"), HttpStatus.CREATED);
-        }        
+        }
         return new ResponseEntity<>(new Mensaje("Operación Finalizada"), HttpStatus.ACCEPTED);
     }
-    
+
     @PostMapping("/login")
     public ResponseEntity<Object> login(@Valid @RequestBody LoginUsuario loginUsuario, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -93,5 +97,5 @@ public class AuthController {
             }
         }
     }
-    
+
 }

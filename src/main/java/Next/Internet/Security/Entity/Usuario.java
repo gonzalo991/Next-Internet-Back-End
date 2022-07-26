@@ -18,7 +18,7 @@ import lombok.Setter;
 @Entity
 public class Usuario {
 
-    /*id, nombre, domicilio, dni, telefono, email, miplan*/
+    /*id, nombre,nombreUsuario, email, password, domicilio, dni, telefono, miplan*/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -44,23 +44,43 @@ public class Usuario {
     @Setter
     private String password;
 
+    @NotNull
+    @Getter
+    @Setter
+    private String domicilio;
+
+    @NotNull
+    @Getter
+    @Setter
+    private String dni;
+
+    @NotNull
+    @Getter
+    @Setter
+    private String telefono;
+    
+    private String miplan;
+
     @Getter
     @Setter
     @NotNull
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id"),
-            inverseJoinColumns = @JoinColumn(name = "rol_id"))
+    @JoinTable(name = "usuario_id", joinColumns = @JoinColumn(name = "usuario_mi_plan"),
+            inverseJoinColumns = @JoinColumn(name = "plan_id"))
     private Set<Rol> roles = new HashSet<>();
 
     public Usuario() {
     }
 
-    public Usuario(String nombre, String nombreUsuario, String email, String password) {
+    public Usuario(String nombre, String nombreUsuario, String email, String password, String domicilio, String dni, String telefono, String miplan) {
         this.nombre = nombre;
         this.nombreUsuario = nombreUsuario;
         this.email = email;
         this.password = password;
+        this.domicilio = domicilio;
+        this.dni = dni;
+        this.telefono = telefono;
+        this.miplan = miplan;
     }
-
 
 }

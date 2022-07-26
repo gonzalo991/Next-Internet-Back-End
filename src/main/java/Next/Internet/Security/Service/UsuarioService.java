@@ -2,6 +2,7 @@ package Next.Internet.Security.Service;
 
 import Next.Internet.Security.Entity.Usuario;
 import Next.Internet.Security.Repository.UsuarioRepository;
+import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +29,9 @@ public class UsuarioService {
 
     public void save(Usuario usuario) {
         usuarioRepository.save(usuario);
+    }
+    
+    public List<Usuario> listarUsuario(){
+        return usuarioRepository.findAll();
     }
 }
