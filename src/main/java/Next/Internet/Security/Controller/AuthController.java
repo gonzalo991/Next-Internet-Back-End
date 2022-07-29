@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin
+@CrossOrigin(origins = "*")
 public class AuthController {
 
     private final PasswordEncoder passwordEncoder;
@@ -43,6 +43,8 @@ public class AuthController {
     private final RolService rolService;
 
     private final JwtProvider jwtProvider;
+
+  
 
     @Autowired
     public AuthController(PasswordEncoder passwordEncoder, AuthenticationManagerBuilder authenticationManagerBuilder, UsuarioService usuarioService, RolService rolService, JwtProvider jwtProvider) {
